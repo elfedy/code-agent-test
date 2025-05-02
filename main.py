@@ -7,6 +7,7 @@ now = datetime.datetime.now()
 logging.info(f"Program started at: {now}")
 
 print("Hello, world!")
+print("----------------------")
 from math_module.math import sum
 
 num1 = 5
