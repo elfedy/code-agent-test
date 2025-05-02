@@ -1,16 +1,23 @@
-import logging
-import datetime
+from http.server import BaseHTTPRequestHandler, HTTPServer
+import json
 
-logging.basicConfig(level=logging.INFO)
+class RequestHandler(BaseHTTPRequestHandler):
+    def do_GET(self):
+        if self.path == '/':
+            self.send_response(200)
+            self.send_header('Content-type', 'application/json')
+            self.end_headers()
+            response = {"message": "Hello, World"}
+            self.wfile.write(json.dumps(response).encode('utf-8'))
+        else:
+            self.send_response(404)
+            self.end_headers()
 
-now = datetime.datetime.now()
-logging.info(f"Program started at: {now}")
+def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
+    server_address = ('', port)
+    httpd = server_class(server_address, handler_class)
+    print(f'Starting server on port {port}')
+    httpd.serve_forever()
 
-print("Hello, world!")
-print("----------------------")
-from math_module.math import sum
-
-num1 = 5
-num2 = 10
-result = sum(num1, num2)
-print(result)
+if __name__ == '__main__':
+    run_server()
