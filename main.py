@@ -1,23 +1,10 @@
-from http.server import BaseHTTPRequestHandler, HTTPServer
-import json
+from flask import Flask, jsonify
 
-class RequestHandler(BaseHTTPRequestHandler):
-    def do_GET(self):
-        if self.path == '/':
-            self.send_response(200)
-            self.send_header('Content-type', 'application/json')
-            self.end_headers()
-            response = {"message": "Hello, World"}
-            self.wfile.write(json.dumps(response).encode('utf-8'))
-        else:
-            self.send_response(404)
-            self.end_headers()
+app = Flask(__name__)
 
-def run_server(server_class=HTTPServer, handler_class=RequestHandler, port=8000):
-    server_address = ('', port)
-    httpd = server_class(server_address, handler_class)
-    print(f'Starting server on port {port}')
-    httpd.serve_forever()
+@app.route('/')
+def hello_world():
+    return jsonify({"message": "Hello, World"})
 
 if __name__ == '__main__':
-    run_server()
+    app.run(port=8000, debug=True)
