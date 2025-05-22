@@ -14,8 +14,9 @@ impl Iterator for Fibonacci {
 
     fn next(&mut self) -> Option<u64> {
         let next_val = self.a;
+        let next_val = self.a;
         self.a = self.b;
-        self.b = next_val + self.b;
+        self.b = next_val.wrapping_add(self.b);
         Some(next_val)
     }
 }
@@ -37,5 +38,7 @@ mod tests {
         assert_eq!(fib.next(), Some(13));
         assert_eq!(fib.next(), Some(21));
         assert_eq!(fib.next(), Some(34));
+        assert_eq!(fib.next(), Some(55));
+        assert_eq!(fib.next(), Some(89));
     }
 }
