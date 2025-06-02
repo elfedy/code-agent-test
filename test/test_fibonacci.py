@@ -12,5 +12,4 @@ class TestFibonacciIterator(unittest.TestCase):
         actual_numbers = [next(fib_iterator) for _ in range(10)]
         self.assertEqual(actual_numbers, expected_numbers)
 
-if __name__ == '__main__':
-    unittest.main()
+
